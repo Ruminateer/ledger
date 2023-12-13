@@ -4,6 +4,7 @@ import sys
 import csv
 from evaluate import evaluate
 
+
 class Transaction:
     people = {}
 
@@ -25,7 +26,11 @@ class Transaction:
         return Transaction(l[0], evaluate(l[1]), l[2].split(), l[3:])
 
     def __str__(self) -> str:
-        debtors_str = ",".join(self.debtors) if len(self.debtors) < len(Transaction.people) else "all"
+        debtors_str = (
+            ",".join(self.debtors)
+            if len(self.debtors) < len(Transaction.people)
+            else "all"
+        )
         result = f"{self.creditor} paid {self.amount:.2f} for {debtors_str}"
         if self.note:
             result += f"\t# {' '.join(self.note)}"
@@ -33,15 +38,16 @@ class Transaction:
 
 
 def load_names(filename: str) -> None:
-    with open(filename, encoding="utf-8", newline='') as file:
+    with open(filename, encoding="utf-8", newline="") as file:
         for row in csv.reader(file, skipinitialspace=True):
             for cell in row:
                 if cell:
                     Transaction.people[cell] = 0
 
+
 def settle_transactions(filenames: list) -> None:
     for filename in filenames:
-        with open(filename, encoding="utf-8", newline='') as file:
+        with open(filename, encoding="utf-8", newline="") as file:
             for row in csv.reader(file, skipinitialspace=True):
                 print(Transaction.from_list(row))
     print("\nSummary:")

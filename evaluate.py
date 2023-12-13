@@ -5,10 +5,14 @@ import operator as op
 
 # supported operators
 operators = {
-    ast.Add: op.add, ast.Sub: op.sub,
-    ast.Mult: op.mul, ast.Div: op.truediv, ast.Pow: op.pow,
-    ast.USub: op.neg
+    ast.Add: op.add,
+    ast.Sub: op.sub,
+    ast.Mult: op.mul,
+    ast.Div: op.truediv,
+    ast.Pow: op.pow,
+    ast.USub: op.neg,
 }
+
 
 def evaluate(expr):
     def eval_(node):
@@ -20,4 +24,4 @@ def evaluate(expr):
             return operators[type(node.op)](eval_(node.operand))
         raise TypeError(node)
 
-    return eval_(ast.parse(expr, mode='eval').body)
+    return eval_(ast.parse(expr, mode="eval").body)
