@@ -2,16 +2,16 @@ from collections.abc import Iterable
 from typing import NamedTuple
 
 
-class TaxBracket(NamedTuple):
+class Bracket(NamedTuple):
     end: float
     rate: float
 
 
-class TaxRate:
-    def __init__(self, brackets: Iterable[TaxBracket]) -> None:
+class Tax:
+    def __init__(self, brackets: Iterable[Bracket]) -> None:
         self._brackets = sorted(brackets)
 
-    def __call__(self, amount: float, begin: float = 0) -> float:
+    def calculate(self, amount: float, begin: float = 0) -> float:
         total_tax = 0
         for brkt in self._brackets:
             taxable_in_bracket = min(brkt.end - begin, amount)
